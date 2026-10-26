@@ -1,0 +1,428 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b12">
+<title>ONYX Cheats — Script Library</title>
+<style>
+:root {
+  --bg:#080b12; --panel:#101725; --line:#202d40;
+  --blue:#2788ff; --text:#f3f7ff; --muted:#95a5bb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:85px}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:Inter,system-ui,-apple-system,Arial,sans-serif}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+header{height:70px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;border-bottom:1px solid var(--line);
+  background:#080b12ee;position:sticky;top:0;z-index:5;backdrop-filter:blur(14px)}
+.brand{font-size:21px;font-weight:900;letter-spacing:2px}
+.brand span{color:var(--blue)}
+nav{display:flex;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border:1px solid var(--line);border-radius:10px;padding:11px 15px;
+  background:var(--panel);color:var(--text);font-weight:700;transition:.2s}
+.btn:hover{transform:translateY(-1px);border-color:var(--blue)}
+.primary{background:var(--blue);border-color:var(--blue);color:white}
+.hero{min-height:510px;display:grid;place-items:center;text-align:center;
+  padding:85px 22px;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;width:500px;height:350px;
+  background:#1674ff20;filter:blur(90px);border-radius:50%;pointer-events:none}
+.hero-content{position:relative;max-width:760px}
+.eyebrow{color:#69aaff;font-size:12px;font-weight:800;letter-spacing:4px}
+h1{font-size:clamp(44px,9vw,82px);letter-spacing:-3px;margin:18px 0;
+  line-height:1.02}
+h1 span{color:var(--blue)}
+.hero p{color:var(--muted);font-size:16px;line-height:1.9;
+  max-width:590px;margin:0 auto 27px}
+.hero-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.stats{display:flex;justify-content:center;gap:32px;margin-top:40px;
+  color:var(--muted);font-size:12px}
+.stats strong{display:block;color:white;font-size:20px;margin-bottom:4px}
+.section{padding:65px 6%;max-width:1400px;margin:auto}
+.section-head{display:flex;justify-content:space-between;align-items:end;
+  gap:18px;flex-wrap:wrap;margin-bottom:24px}
+h2{font-size:30px;margin:0 0 8px}
+.sub{color:var(--muted);font-size:14px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+input,textarea{width:100%;background:#090f19;border:1px solid var(--line);
+  color:white;padding:12px;border-radius:9px;outline:none}
+input:focus,textarea:focus{border-color:var(--blue)}
+#search{max-width:360px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));
+  gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);
+  border-radius:15px;overflow:hidden;min-width:0}
+.game-pic{width:100%;height:155px;object-fit:cover;display:block;
+  background:#18243a}
+.card-body{padding:18px}
+.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card h3{font-size:19px;margin:0}
+.tag{font-size:10px;color:#8fc1ff;background:#15345b;
+  border-radius:6px;padding:5px 8px;white-space:nowrap}
+.desc{font-size:13px;color:var(--muted);line-height:1.65;min-height:40px}
+.meta{font-size:11px;color:#788ba4;margin:14px 0}
+pre{margin:0 0 12px;padding:13px;border:1px solid var(--line);
+  border-radius:9px;background:#080c13;overflow:auto;max-height:145px;
+  white-space:pre-wrap;overflow-wrap:anywhere;color:#9cc9ff;font-size:12px}
+.card-actions{display:flex;gap:8px}
+.card-actions .btn{flex:1;padding:10px 8px;font-size:12px}
+.empty{padding:45px 15px;text-align:center;color:var(--muted);
+  border:1px dashed var(--line);border-radius:12px;grid-column:1/-1}
+.notice{border:1px solid var(--line);background:#0d1420;border-radius:12px;
+  padding:16px;color:var(--muted);font-size:13px;line-height:1.7;margin-top:24px}
+footer{border-top:1px solid var(--line);padding:28px 6%;display:flex;
+  justify-content:space-between;gap:15px;flex-wrap:wrap;color:var(--muted);
+  font-size:12px}
+dialog{width:min(560px,calc(100% - 28px));max-height:90vh;overflow:auto;
+  background:#101725;color:white;border:1px solid #2b3b52;border-radius:15px;
+  padding:22px}
+dialog::backdrop{background:#000b;backdrop-filter:blur(5px)}
+dialog h2{font-size:23px;margin-bottom:20px}
+.field{display:grid;gap:7px;margin-bottom:14px}
+.field label{font-size:12px;color:#afbdd0}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:#16243a;border:1px solid #34577e;color:white;
+  padding:12px 18px;border-radius:10px;display:none;z-index:10;
+  max-width:90%;text-align:center}
+@media(max-width:600px){
+  header{padding:0 4%;height:62px}
+  .brand{font-size:17px;letter-spacing:1px}
+  nav{gap:5px}nav .btn{padding:9px;font-size:11px}
+  .hero{min-height:460px;padding:70px 18px}
+  h1{letter-spacing:-2px}
+  .section{padding:48px 5%}
+  .stats{gap:20px}
+}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="#">ONYX<span> CHEATS</span></a>
+  <nav>
+    <a class="btn" href="https://t.me/OnyxMods" target="_blank" rel="noopener">✈ Telegram</a>
+    <a class="btn" href="https://t.me/Voidontopg" target="_blank" rel="noopener">♙ Owner</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">THE ONYX SCRIPT LIBRARY</div>
+    <h1>ONYX <span>CHEATS</span></h1>
+    <p>Onyx cheats is a platform for online gaming cheats.
+      We don't make you pay or earn keys — everything here is free and keyless!</p>
+    <div class="hero-actions">
+      <button class="btn primary" id="viewAll">VIEW ALL LOADSTRINGS ↘</button>
+      <button class="btn" id="addOpen">＋ Add Loadstring</button>
+    </div>
+    <div class="stats">
+      <div><strong id="count">0</strong>Scripts listed</div>
+      <div><strong>FREE</strong>No paid access</div>
+      <div><strong>ONYX</strong>Script library</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="library">
+  <div class="section-head">
+    <div>
+      <h2>Script Library<span style="color:var(--blue)">.</span></h2>
+      <div class="sub">Browse the collection. Newest additions appear first.</div>
+    </div>
+  </div>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Search scripts or games…"
+      aria-label="Search scripts">
+    <button class="btn" id="sortBtn">↕ Newest first</button>
+  </div>
+  <div class="grid" id="scripts"></div>
+  <div class="notice">
+    <strong style="color:white">Safety note</strong><br>
+    Inspect code before using it. This site displays and copies source text;
+    it does not execute scripts inside Roblox. Only use code in environments
+    and projects where you have permission.
+  </div>
+</section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> ONYX CHEATS</span>
+  <span>Built for the community.</span>
+  <button class="btn" id="ownerOpen">Owner dashboard</button>
+</footer>
+
+<dialog id="ownerDialog">
+  <h2>Owner access</h2>
+  <p class="sub">Secure owner authentication must be connected to a server before this can be used publicly.</p>
+  <div class="field">
+    <label for="ownerCode">Owner code</label>
+    <input id="ownerCode" type="password" autocomplete="current-password"
+      placeholder="Enter owner code">
+  </div>
+  <div class="form-actions">
+    <button class="btn primary" id="loginBtn">Connect owner access</button>
+    <button class="btn" data-close="ownerDialog">Cancel</button>
+  </div>
+  <p class="sub" id="authMessage"></p>
+</dialog>
+
+<dialog id="scriptDialog">
+  <h2>Add a script</h2>
+  <p class="sub">Prototype: entries are saved only in this browser. Connect a database for a shared public catalogue.</p>
+  <form id="scriptForm">
+    <div class="field"><label for="gameName">Game name</label>
+      <input id="gameName" required maxlength="100" placeholder="Game name"></div>
+    <div class="field"><label for="gameImage">Game picture URL</label>
+      <input id="gameImage" type="url" placeholder="https://example.com/image.jpg"></div>
+    <div class="field"><label for="scriptDesc">Description</label>
+      <textarea id="scriptDesc" rows="2" maxlength="500" placeholder="What does this script do?"></textarea></div>
+    <div class="field"><label for="scriptSource">Lua/Luau source</label>
+      <textarea id="scriptSource" rows="6" required maxlength="50000" placeholder="Paste source code here"></textarea></div>
+    <div class="field"><label for="screenUrl">Screenshot URL (optional)</label>
+      <input id="screenUrl" type="url" placeholder="https://example.com/screenshot.jpg"></div>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">Save script locally</button>
+      <button class="btn" type="button" data-close="scriptDialog">Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const STORAGE_KEY = "onyx_script_catalog_v1";
+const starterScripts = [
+  {
+    id:"sample-1",
+    game:"Example Roblox Game",
+    image:"",
+    description:"Example entry. Replace it with a script you are authorized to share.",
+    source:'-- Example Luau source\\nprint("Hello from ONYX!")',
+    screenshot:"",
+    created:Date.now()
+  }
+];
+
+const $ = id => document.getElementById(id);
+let newestFirst = true;
+let toastTimer;
+
+function toast(message) {
+  const el = $("toast");
+  el.textContent = message;
+  el.style.display = "block";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.style.display = "none", 2400);
+}
+
+function safeUrl(value) {
+  try {
+    const u = new URL(value);
+    return ["https:", "http:"].includes(u.protocol) ? u.href : "";
+  } catch { return ""; }
+}
+
+function loadScripts() {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) return parsed;
+    }
+  } catch (error) {
+    console.warn("Could not load local catalogue:", error);
+  }
+  return starterScripts;
+}
+
+let scripts = loadScripts();
+
+function saveScripts() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(scripts));
+    return true;
+  } catch (error) {
+    console.error(error);
+    toast("Could not save. Browser storage may be full or unavailable.");
+    return false;
+  }
+}
+
+function makeButton(label, className, callback) {
+  const button = document.createElement("button");
+  button.className = "btn " + className;
+  button.textContent = label;
+  button.type = "button";
+  button.addEventListener("click", callback);
+  return button;
+}
+
+function render() {
+  const container = $("scripts");
+  container.replaceChildren();
+
+  const term = $("search").value.trim().toLowerCase();
+  const filtered = scripts
+    .filter(s => [s.game, s.description, s.source]
+      .some(v => String(v || "").toLowerCase().includes(term)))
+    .sort((a,b) => newestFirst
+      ? Number(b.created || 0) - Number(a.created || 0)
+      : Number(a.created || 0) - Number(b.created || 0));
+
+  $("count").textContent = scripts.length;
+
+  if (!filtered.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = term ? "No matching scripts found." :
+      "No scripts yet. Add an entry to get started.";
+    container.append(empty);
+    return;
+  }
+
+  for (const s of filtered) {
+    const card = document.createElement("article");
+    card.className = "card";
+
+    const image = document.createElement("img");
+    image.className = "game-pic";
+    image.alt = s.game + " game picture";
+    image.loading = "lazy";
+    const imageUrl = safeUrl(s.image || "");
+    if (imageUrl) {
+      image.src = imageUrl;
+      image.onerror = () => {
+        image.removeAttribute("src");
+        image.alt = "Image unavailable";
+      };
+    } else {
+      image.alt = "No game picture added";
+    }
+
+    const body = document.createElement("div");
+    body.className = "card-body";
+
+    const top = document.createElement("div");
+    top.className = "card-top";
+    const title = document.createElement("h3");
+    title.textContent = s.game || "Untitled game";
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = "LUA / LUAU";
+    top.append(title, tag);
+
+    const desc = document.createElement("p");
+    desc.className = "desc";
+    desc.textContent = s.description || "No description provided.";
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+    meta.textContent = "Added " + new Date(Number(s.created) || Date.now())
+      .toLocaleDateString();
+
+    const code = document.createElement("pre");
+    code.textContent = String(s.source || "");
+
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+    actions.append(makeButton("▣ Copy source", "primary", async () => {
+      try {
+        await navigator.clipboard.writeText(String(s.source || ""));
+        toast("Source copied!");
+      } catch {
+        const temp = document.createElement("textarea");
+        temp.value = String(s.source || "");
+        document.body.append(temp);
+        temp.select();
+        const ok = document.execCommand("copy");
+        temp.remove();
+        toast(ok ? "Source copied!" : "Copy failed. Select the source manually.");
+      }
+    }));
+
+    if (safeUrl(s.screenshot || "")) {
+      actions.append(makeButton("▧ Screenshot", "", () => {
+        window.open(safeUrl(s.screenshot), "_blank", "noopener,noreferrer");
+      }));
+    }
+
+    body.append(top, desc, meta, code, actions);
+    card.append(image, body);
+    container.append(card);
+  }
+}
+
+$("viewAll").addEventListener("click", () =>
+  $("library").scrollIntoView({behavior:"smooth"}));
+
+$("search").addEventListener("input", render);
+
+$("sortBtn").addEventListener("click", () => {
+  newestFirst = !newestFirst;
+  $("sortBtn").textContent = newestFirst ? "↕ Newest first" : "↕ Oldest first";
+  render();
+});
+
+$("addOpen").addEventListener("click", () => {
+  $("ownerDialog").showModal();
+  $("authMessage").textContent =
+    "Owner login is not configured. Add a server-side authentication endpoint to enable secure access.";
+});
+
+$("ownerOpen").addEventListener("click", () => $("ownerDialog").showModal());
+
+$("loginBtn").addEventListener("click", async () => {
+  // No secret is embedded in this HTML. Configure a real server endpoint.
+  $("authMessage").textContent =
+    "Not connected: deploy an authentication backend before enabling owner access.";
+});
+
+document.querySelectorAll("[data-close]").forEach(button => {
+  button.addEventListener("click", () => $(button.dataset.close).close());
+});
+
+$("scriptForm").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const entry = {
+    id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())),
+    game: $("gameName").value.trim(),
+    image: safeUrl($("gameImage").value.trim()),
+    description: $("scriptDesc").value.trim(),
+    source: $("scriptSource").value,
+    screenshot: safeUrl($("screenUrl").value.trim()),
+    created: Date.now()
+  };
+
+  if (!entry.game || !entry.source.trim()) {
+    toast("Enter a game name and source code.");
+    return;
+  }
+
+  scripts.unshift(entry);
+  if (!saveScripts()) {
+    scripts.shift();
+    return;
+  }
+
+  $("scriptForm").reset();
+  $("scriptDialog").close();
+  render();
+  toast("Saved in this browser only.");
+});
+
+$("year").textContent = new Date().getFullYear();
+render();
+</script>
+</body>
+    </html>
+    
